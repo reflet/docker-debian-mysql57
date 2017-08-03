@@ -1,0 +1,18 @@
+version: '2'
+services:
+ app:
+  image: busybox
+  container_name: 'app'
+  volumes:
+   - /var/lib/mysql
+
+ mysql:
+  image: reflet/debian8-mysql57
+  container_name: 'mysql'
+  env_file: .env.mysql
+  ports:
+   - '3306:3306'
+  volumes:
+   - ./initdb.mysql:/docker-entrypoint-initdb.d/
+  volumes_from:
+   - app
